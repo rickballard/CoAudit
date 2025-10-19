@@ -1,0 +1,18 @@
+# Example repository metrics registry
+- id: sample.metric.example.v1
+  name: Example Metric
+  status: in_use
+  unit: score_0_100
+  owner: ["@team-example"]
+  cadence_days: 7
+  thresholds:
+    red_lt: 60
+    amber_lt: 80
+    green_gte: 80
+  derivation:
+    inputs:
+      - "reports/lighthouse.json"
+      - "docs/intent/manifest.json"
+    method: "weighted_blend"
+  evidence:
+    - "METRICS_INDEX.md#example-metric"

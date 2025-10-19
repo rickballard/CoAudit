@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CoSuite Metric",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "unit",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "in_use",
+        "planned",
+        "missing",
+        "deprecated"
+      ]
+    },
+    "unit": {
+      "type": "string"
+    },
+    "owner": {
+      "type": [
+        "array",
+        "string"
+      ]
+    },
+    "cadence_days": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "thresholds": {
+      "type": "object"
+    },
+    "derivation": {
+      "type": "object"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
