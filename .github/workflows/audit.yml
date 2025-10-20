@@ -3,7 +3,7 @@ name: CoAudit (read-only discovery)
 on:
   workflow_dispatch:
   schedule:
-    - cron: "17 6 * * *"  # daily 06:17 UTC
+    - cron: "17 6 * * *"
 
 permissions:
   contents: read
@@ -16,20 +16,18 @@ jobs:
       - name: Checkout CoAudit
         uses: actions/checkout@v4
 
-      - name: Setup PowerShell
-        uses: PowerShell/PowerShell@v1
-        with:
-          pwsh-version: '7.4.x'
+      - name: PowerShell version (for logs)
+        run: pwsh -v
+        shell: pwsh
 
       - name: Run discovery (read-only)
         env:
           GITHUB_TOKEN: ${{ secrets.COAUDIT_RO_TOKEN }}
-        run: |
-          pwsh -File scripts/Discover-Metrics.ps1 -Owner rickballard -ShallowClone
+        run: pwsh -File scripts/Discover-Metrics.ps1 -Owner rickballard -ShallowClone
+        shell: pwsh
 
       - name: Upload reports
         uses: actions/upload-artifact@v4
         with:
           name: coaudit-reports
           path: reports/**
-
