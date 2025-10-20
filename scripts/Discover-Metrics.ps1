@@ -5,10 +5,11 @@ param(
   [Parameter(Mandatory=$false)][switch]$ShallowClone
 )
 
-$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = "Stop"
 
+# Token is optional for public repos (lower rate limits)
 if (-not $Token) {
-  Write-Error "GITHUB_TOKEN (read-only) is required. Create a fine-grained PAT with contents:read."
+  Write-Warning "No GITHUB_TOKEN provided. Running unauthenticated (lower rate limits)."
 }
 
 # Output dirs
@@ -17,34 +18,49 @@ $cardsDir  = Join-Path $reportDir "cards"
 $streamDir = Join-Path $PSScriptRoot "../reports/stream"
 New-Item -ItemType Directory -Force -Path $reportDir, $cardsDir, $streamDir | Out-Null
 
-# Helper: GitHub API GET
 function Invoke-GHGet([string]$Url) {
-  $Headers = @{ Authorization = "Bearer $Token"; 'User-Agent' = 'CoAudit' }
+  $Headers = @{ 'User-Agent' = 'CoAudit' }
+  if ($Token) { $Headers['Authorization'] = "Bearer $Token" }
   return Invoke-RestMethod -Headers $Headers -Uri $Url -Method Get
 }
 
-# 1) List public repos for owner
+# 1) List public source repos for owner
 $per_page = 100
 $page = 1
 $repos = @()
 do {
   $url = "https://api.github.com/users/$Owner/repos?type=source&per_page=$per_page&page=$page"
   $batch = Invoke-GHGet $url
-  if ($batch.Count -eq 0) { break }
+  if (-not $batch -or $batch.Count -eq 0) { break }
   $repos += $batch
   $page += 1
 } while ($true)
 
-# 2) Clone (read-only) and discover
 $records = @()
+
 foreach ($r in $repos) {
   $name = $r.name
   $cloneUrl = $r.clone_url
   $local = Join-Path $Root $name
+
   if (-not (Test-Path $local)) {
-    git clone $(if($ShallowClone){"--depth 1"} else {""}) $cloneUrl $local | Out-Null
+    if ($ShallowClone) {
+      git clone --depth=1 $cloneUrl $local 2>$null
+    } else {
+      git clone $cloneUrl $local 2>$null
+    }
+  }
+
+  if (Test-Path $local) {
+    Push-Location $local
+    try {
+      git fetch --all --prune 2>$null
+      git checkout $r.default_branch 2>$null
+      git pull 2>$null
+    } finally { Pop-Location }
   } else {
-    Push-Location $local; try { git fetch --all --prune | Out-Null; git checkout $r.default_branch | Out-Null; git pull | Out-Null } finally { Pop-Location }
+    Write-Warning "Clone failed or repo missing: $name ($cloneUrl). Skipping."
+    continue
   }
 
   Push-Location $local
@@ -59,7 +75,7 @@ foreach ($r in $repos) {
         foreach ($line in $lines) {
           if ($line -match '^\|' -and $line -notmatch '^\|[-:]') {
             $cols = ($line.Trim('|').Split('|') | ForEach-Object { $_.Trim() })
-            if ($cols.Count -ge 2 -and $cols[0] -ne 'id' -and $cols[0] -ne 'metric' -and $cols[0] -ne 'kpi') {
+            if ($cols.Count -ge 2 -and $cols[0] -notin @('id','metric','kpi')) {
               $records += [pscustomobject]@{
                 repo=$name; sha=$sha; source='METRICS_INDEX.md'; id=$cols[0]; name=$cols[1]; status='in_use'; evidence=$_.FullName
               }
@@ -69,7 +85,7 @@ foreach ($r in $repos) {
       }
     }
 
-    # *.metrics files
+    # *.metrics.(yml|yaml|json)
     Get-ChildItem -Recurse -Include *.metrics.yml,*.metrics.yaml,*.metrics.json -ErrorAction SilentlyContinue | ForEach-Object {
       $path = $_.FullName
       $content = Get-Content $path -Raw
