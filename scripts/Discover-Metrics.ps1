@@ -55,7 +55,16 @@ foreach ($r in $repos) {
     Push-Location $local
     try {
       git fetch --all --prune 2>$null
-      git checkout $r.default_branch 2>$null
+      $branch = $r.default_branch
+if (-not $branch -or [string]::IsNullOrWhiteSpace($branch)) { $branch = "main" }
+# checkout or create local tracking; fall back to master if main doesn’t exist
+git rev-parse --verify "origin/$branch" 2>$null
+if ($LASTEXITCODE -ne 0) {
+  $branch = "master"
+  git rev-parse --verify "origin/$branch" 2>$null | Out-Null
+}
+git checkout -B $branch 2>$null
+git pull origin $branch 2>$null
       git pull 2>$null
     } finally { Pop-Location }
   } else {
@@ -65,7 +74,11 @@ foreach ($r in $repos) {
 
   Push-Location $local
   try {
-    $sha = (git rev-parse --short HEAD).Trim()
+    $sha = "unknown"
+try {
+  $tmp = (git rev-parse --short HEAD 2>$null)
+  if ($LASTEXITCODE -eq 0 -and $tmp) { $sha = $tmp.Trim() }
+} catch {}
 
     # METRICS_INDEX.md
     Get-ChildItem -Recurse -Filter 'METRICS_INDEX.md' -ErrorAction SilentlyContinue | ForEach-Object {
@@ -137,3 +150,4 @@ $nd = Join-Path $streamDir ('metrics.{0}.ndjson' -f (Get-Date -Format 'yyyyMMdd'
 $registry | ForEach-Object { $_ | ConvertTo-Json -Compress } | Set-Content -Path $nd -Encoding utf8
 
 Write-Host "Discovery complete. See:`n $discoveryPath`n $registryPath`n $nd"
+
