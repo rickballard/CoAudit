@@ -29,7 +29,6 @@ intent manifests, and emits **advisory reports** as artifacts and JSON under `/r
 
 **Important:** Target repos (e.g., `CoCore`, `CoRef`, `CoAgent`, etc.) should keep relaxed
 branch protections only if truly necessary. CoAudit enforces **read‑only discipline** either way.
-
 <!-- BEGIN: STATUS -->
 ### Operational Status
 CoDrift Index: n/a% (n/a)
