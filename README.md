@@ -1,3 +1,22 @@
+<!-- DWM:BEGIN -->
+## 🚨 CoPrime: DeprecateWhenMined Advisory Sandbox
+
+A **hands-off** CoAudit sandbox for *Evolutionary Advisory Units (EAUs)* is available.  
+**Mine** it for actionable guidance across the CoSuite, then **delete it** when done.
+
+**Start here (absolute link):**  
+https://github.com/rickballard/CoAudit/blob/main/docs/intent/DeprecateWhenMined/README.md
+
+**What you’ll find**
+- Charter (hands-off rules), strategy, comparators  
+- JSON schemas for advisories & replies  
+- Read-only PS7 scripts to compile the advice index & scorecards  
+- Copy-paste Issue/PR templates for executing sessions  
+- A deprecation checklist to remove the folder once mined
+
+> CoAudit observes → compares → advises → measures. It makes **no changes** to other repos.
+<!-- DWM:END -->
+
 # CoAudit (Bootstrap)
 
 Read‑only auditor for the CoSuite. This repository **never writes** to other repos.
@@ -33,4 +52,5 @@ branch protections only if truly necessary. CoAudit enforces **read‑only disci
 ### Operational Status
 CoDrift Index: n/a% (n/a)
 <!-- END: STATUS -->
+
 
