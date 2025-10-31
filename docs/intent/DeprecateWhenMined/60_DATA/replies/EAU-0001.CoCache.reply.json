@@ -1,0 +1,10 @@
+{
+  "advisory_id": "EAU-0001",
+  "repo": "CoCache",
+  "actor": "Chris",
+  "timestamp": "2025-10-31T00:38:33.0111987-04:00",
+  "resolution": "accepted",
+  "notes": "Baseline CI + SBOM landed; actions pinned.",
+  "evidence_links": [],
+  "hashes": []
+}
