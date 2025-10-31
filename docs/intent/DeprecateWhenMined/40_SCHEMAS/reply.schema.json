@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Advisory Implementation Reply",
+  "type": "object",
+  "required": [
+    "advisory_id",
+    "repo",
+    "actor",
+    "timestamp",
+    "resolution"
+  ],
+  "properties": {
+    "advisory_id": {
+      "type": "string"
+    },
+    "repo": {
+      "type": "string"
+    },
+    "actor": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "resolution": {
+      "type": "string",
+      "enum": [
+        "accepted",
+        "partially_accepted",
+        "deferred",
+        "rejected",
+        "superseded"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    },
+    "evidence_links": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "hashes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

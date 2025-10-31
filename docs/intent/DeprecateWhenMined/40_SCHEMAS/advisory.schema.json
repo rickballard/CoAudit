@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Evolutionary Advisory Unit",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "created",
+    "version",
+    "rationale",
+    "proposed_actions",
+    "evidence",
+    "provenance",
+    "freshness",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "EAU-[0-9]{4}"
+    },
+    "title": {
+      "type": "string"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "version": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "repos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "comparators": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "proposed_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "copy_paste": {
+      "type": "object",
+      "properties": {
+        "issue_text_path": {
+          "type": "string"
+        },
+        "pr_text_path": {
+          "type": "string"
+        },
+        "files_to_add": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        }
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "properties": {
+        "review_in_days": {
+          "type": "integer"
+        },
+        "expires_after_days": {
+          "type": "integer"
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "published",
+        "stale",
+        "superseded",
+        "retired"
+      ]
+    }
+  }
+}
