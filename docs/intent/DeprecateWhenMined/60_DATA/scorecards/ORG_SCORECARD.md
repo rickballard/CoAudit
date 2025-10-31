@@ -1,3 +1,3 @@
 # CoSuite Advisory Closure Score
 
-Org score: **0%**
+Org score: **100%**
