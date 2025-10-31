@@ -1,3 +1,5 @@
+[![CoAudit Advisory Nightly](https://github.com/rickballard/CoAudit/actions/workflows/coaudit-advice-nightly.yml/badge.svg)](https://github.com/rickballard/CoAudit/actions/workflows/coaudit-advice-nightly.yml)
+
 <!-- DWM:BEGIN -->
 ## 🚨 CoPrime: DeprecateWhenMined Advisory Sandbox
 
@@ -52,5 +54,6 @@ branch protections only if truly necessary. CoAudit enforces **read‑only disci
 ### Operational Status
 CoDrift Index: n/a% (n/a)
 <!-- END: STATUS -->
+
 
 
