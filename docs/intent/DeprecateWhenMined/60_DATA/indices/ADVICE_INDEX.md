@@ -1,2 +1,3 @@
 # Advisory Index
-*(no advisories yet)*
+
+- **EAU-0001** — Pin Actions & publish SBOM on release  _(status: draft)_
