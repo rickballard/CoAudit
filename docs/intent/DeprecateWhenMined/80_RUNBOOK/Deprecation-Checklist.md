@@ -1,0 +1,3 @@
+- [ ] Advisory index consumed
+- [ ] Replies received & scorecards rendered
+- [ ] Folder removal PR opened
