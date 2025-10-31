@@ -1,0 +1,29 @@
+[
+  {
+    "repo": "CoAudit",
+    "sha": "fa89f99",
+    "source": "metrics_file",
+    "id": "repo.metrics",
+    "name": "repo.metrics",
+    "status": "in_use",
+    "evidence": "/home/runner/Documents/GitHub/CoAudit/templates/repo.metrics.yml"
+  },
+  {
+    "repo": "CoCivium",
+    "sha": "eec0fed",
+    "source": "metrics_file",
+    "id": "stars.metrics",
+    "name": "stars.metrics",
+    "status": "in_use",
+    "evidence": "/home/runner/Documents/GitHub/CoCivium/site/eyes/stars.metrics.json"
+  },
+  {
+    "repo": "CoCiviumBackUp",
+    "sha": "dc99d72",
+    "source": "metrics_file",
+    "id": "stars.metrics",
+    "name": "stars.metrics",
+    "status": "in_use",
+    "evidence": "/home/runner/Documents/GitHub/CoCiviumBackUp/site/eyes/stars.metrics.json"
+  }
+]

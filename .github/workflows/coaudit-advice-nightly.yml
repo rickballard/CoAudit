@@ -1,7 +1,11 @@
 name: CoAudit Advisory Nightly
 on:
   schedule:
+<<<<<<< HEAD
     - cron: "17 3 * * *"   # daily 03:17 UTC
+=======
+    - cron: "17 3 * * *"
+>>>>>>> origin/main
   push:
     paths:
       - "docs/intent/DeprecateWhenMined/**"

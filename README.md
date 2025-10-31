@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+[![CoAudit Advisory Nightly](https://github.com/rickballard/CoAudit/actions/workflows/coaudit-advice-nightly.yml/badge.svg)](https://github.com/rickballard/CoAudit/actions/workflows/coaudit-advice-nightly.yml)
+
+>>>>>>> origin/main
 <!-- DWM:BEGIN -->
 ## 🚨 CoPrime: DeprecateWhenMined Advisory Sandbox
 
@@ -54,3 +59,7 @@ CoDrift Index: n/a% (n/a)
 <!-- END: STATUS -->
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main

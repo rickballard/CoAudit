@@ -4,10 +4,25 @@ $repdir = Join-Path $root '60_DATA\replies'
 $scroot = Join-Path $root '60_DATA\scorecards'
 $scdir  = Join-Path $scroot 'repos'
 New-Item -ItemType Directory -Force $scdir | Out-Null
+<<<<<<< HEAD
 $replies = @()
 if(Test-Path $repdir){
   $replies = Get-ChildItem $repdir -Filter '*.reply.json' -ErrorAction SilentlyContinue | Get-Content | ForEach-Object { $_ | ConvertFrom-Json }
 }
+=======
+
+$replies = @()
+if(Test-Path $repdir){
+  Get-ChildItem $repdir -Filter '*.reply.json' -ErrorAction SilentlyContinue |
+    ForEach-Object {
+      $raw = Get-Content $_.FullName -Raw
+      if([string]::IsNullOrWhiteSpace($raw)){ return }
+      if(-not ($raw | Test-Json -ErrorAction SilentlyContinue)){ return }
+      try { $replies += ($raw | ConvertFrom-Json) } catch {}
+    }
+}
+
+>>>>>>> origin/main
 $byRepo = $replies | Group-Object repo
 foreach($g in $byRepo){
   $accepted = ($g.Group | Where-Object { $_.resolution -in @('accepted','partially_accepted') }).Count
@@ -16,6 +31,10 @@ foreach($g in $byRepo){
   @{ repo=$g.Name; total=$total; accepted=$accepted; score=$score } |
     ConvertTo-Json | Set-Content -Encoding UTF8 (Join-Path $scdir "$($g.Name).score.json")
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
 $avg = 0
 if($byRepo.Count -gt 0){
   $scores = foreach($g in $byRepo){
@@ -23,5 +42,12 @@ if($byRepo.Count -gt 0){
   }
   $avg = [math]::Round( ($scores | Measure-Object -Average).Average, 0 )
 }
+<<<<<<< HEAD
 "# CoSuite Advisory Closure Score`n`nOrg score: **$avg%**" | Set-Content -Encoding UTF8 (Join-Path $scroot 'ORG_SCORECARD.md')
+=======
+
+"# CoSuite Advisory Closure Score`n`nOrg score: **$avg%**" |
+  Set-Content -Encoding UTF8 (Join-Path $scroot 'ORG_SCORECARD.md')
+
+>>>>>>> origin/main
 Write-Host "Scorecards rendered."

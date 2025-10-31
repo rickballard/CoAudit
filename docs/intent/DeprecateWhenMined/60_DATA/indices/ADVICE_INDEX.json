@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [
   {
     "id": "EAU-0001",
@@ -155,3 +156,36 @@
     "status": "draft"
   }
 ]
+=======
+{
+  "id": "EAU-0001",
+  "title": "Pin Actions & publish SBOM on release",
+  "created": "2025-10-31T00:31:29.0067583-04:00",
+  "updated": "2025-10-31T00:31:29.0067583-04:00",
+  "version": "0.1.0",
+  "scope": {
+    "repos": [
+      "CoCache"
+    ],
+    "tags": []
+  },
+  "rationale": "Reduce supply-chain risk; increase release provenance.",
+  "comparators": [],
+  "proposed_actions": [],
+  "copy_paste": {
+    "pr_text_path": "70_TEMPLATES/PR_TEXT_TEMPLATE.md",
+    "issue_text_path": "70_TEMPLATES/ISSUE_TEXT_TEMPLATE.md",
+    "files_to_add": []
+  },
+  "evidence": [],
+  "provenance": {
+    "confidence": "medium",
+    "sources": []
+  },
+  "freshness": {
+    "expires_after_days": 120,
+    "review_in_days": 30
+  },
+  "status": "draft"
+}
+>>>>>>> origin/main
