@@ -1,0 +1,31 @@
+{
+  "id": "EAU-0004",
+  "title": "Pin all GitHub Actions by SHA (not tags)",
+  "created": "2025-10-31T00:38:26.8289189-04:00",
+  "updated": "2025-10-31T00:38:26.8289189-04:00",
+  "version": "0.1.0",
+  "scope": {
+    "repos": [
+      "CoCache"
+    ],
+    "tags": []
+  },
+  "rationale": "Tags can move; SHA pinning reduces hijack risk.",
+  "comparators": [],
+  "proposed_actions": [],
+  "copy_paste": {
+    "files_to_add": [],
+    "issue_text_path": "70_TEMPLATES/ISSUE_TEXT_TEMPLATE.md",
+    "pr_text_path": "70_TEMPLATES/PR_TEXT_TEMPLATE.md"
+  },
+  "evidence": [],
+  "provenance": {
+    "confidence": "medium",
+    "sources": []
+  },
+  "freshness": {
+    "review_in_days": 30,
+    "expires_after_days": 120
+  },
+  "status": "draft"
+}
