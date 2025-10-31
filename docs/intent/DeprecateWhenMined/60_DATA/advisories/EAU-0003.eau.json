@@ -1,0 +1,31 @@
+{
+  "id": "EAU-0003",
+  "title": "One-screen Quickstart + CODEOWNERS + Issue/PR templates",
+  "created": "2025-10-31T00:34:18.0763922-04:00",
+  "updated": "2025-10-31T00:34:18.0763922-04:00",
+  "version": "0.1.0",
+  "scope": {
+    "tags": [],
+    "repos": [
+      "CoCache"
+    ]
+  },
+  "rationale": "Lower time-to-first-success; increase PR throughput.",
+  "comparators": [],
+  "proposed_actions": [],
+  "copy_paste": {
+    "files_to_add": [],
+    "pr_text_path": "70_TEMPLATES/PR_TEXT_TEMPLATE.md",
+    "issue_text_path": "70_TEMPLATES/ISSUE_TEXT_TEMPLATE.md"
+  },
+  "evidence": [],
+  "provenance": {
+    "confidence": "medium",
+    "sources": []
+  },
+  "freshness": {
+    "expires_after_days": 120,
+    "review_in_days": 30
+  },
+  "status": "draft"
+}
