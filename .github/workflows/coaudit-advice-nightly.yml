@@ -1,10 +1,15 @@
 name: CoAudit Advisory Nightly
+
 on:
   schedule:
     - cron: "17 3 * * *"
   push:
     paths:
       - "docs/intent/DeprecateWhenMined/**"
+  pull_request:
+    paths:
+      - "docs/intent/DeprecateWhenMined/**"
+
 jobs:
   build-index:
     runs-on: ubuntu-latest
@@ -18,6 +23,7 @@ jobs:
       - name: Rebuild index + staleness + scorecards (hands-off)
         shell: pwsh
         run: |
+          $ErrorActionPreference='Stop'
           $D = "docs/intent/DeprecateWhenMined/50_SCRIPTS"
           pwsh -NoProfile -File "$D/Compile-AdviceIndex.ps1"
           pwsh -NoProfile -File "$D/Evaluate-Staleness.ps1"
