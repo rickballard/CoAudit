@@ -1,0 +1,8 @@
+version: 0.1
+signals:
+  - key: drift.workflow_missing_checks
+    level: warn
+    desc: "PR lacks expected quality checks or artifacts"
+  - key: drift.no_tension_artifact
+    level: info
+    desc: "tension.json not produced by consumer pipeline"
