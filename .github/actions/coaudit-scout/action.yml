@@ -1,0 +1,24 @@
+name: "coaudit-scout (v0.1)"
+description: "Emit read-only immunity artifacts for downstream consumers."
+inputs:
+  outdir:
+    description: "Output dir for artifacts"
+    required: false
+    default: "coaudit"
+runs:
+  using: "composite"
+  steps:
+    - name: Ensure outdir
+      shell: bash
+      run: |
+        set -euo pipefail
+        mkdir -p "${{ inputs.outdir }}"
+    - name: Generate artifacts (seed)
+      shell: bash
+      run: |
+        set -euo pipefail
+        O="${{ inputs.outdir }}"
+        # minimal seed: one finding + empty tension set
+        printf '[{"signal":"drift.no_tension_artifact","level":"info","at":"%s"}]\n' "$(date -u +%FT%TZ)" > "$O/findings.json"
+        printf '[]\n' > "$O/tension.json"
+        printf '{"ts":"%s","msg":"seed emitted"}\n' "$(date -u +%FT%TZ)" >> "$O/IMMUNITY_LOG.jsonl"
