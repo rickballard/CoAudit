@@ -1,0 +1,41 @@
+$ErrorActionPreference='Stop'
+$User   = 'rickballard'
+$Root   = 'C:\Users\Chris\Desktop\CoSuiteBackup'
+$Stamp  = (Get-Date -Format 'yyyyMMdd-HHmmssZ')
+$OutDir = Join-Path $Root '_RECEIPTS'; New-Item -ItemType Directory -Force $OutDir | Out-Null
+
+gh rz -User $User -OutDir $Root -UseGhClone
+
+function Get-FolderBytes([string]$Path){ (Get-ChildItem -Recurse -File -Force $Path | Measure-Object Length -Sum).Sum }
+$rows = foreach($d in Get-ChildItem $Root -Directory | Sort-Object Name){
+  $packDir = Join-Path $d.FullName 'objects\pack'
+  $packs   = @(Get-ChildItem -File -ea SilentlyContinue $packDir -Filter *.pack)
+  [pscustomobject]@{ repo=$d.Name; path=$d.FullName; bytes=(Get-FolderBytes $d.FullName); pack_count=$packs.Count }
+}
+$csv = Join-Path $OutDir "manifest_$Stamp.csv"
+$rows | Sort-Object repo | Export-Csv -NoTypeInformation -Encoding UTF8 $csv
+
+$hashCsv = Join-Path $OutDir "pack_hashes_$Stamp.csv"
+$hashRows = foreach($d in Get-ChildItem $Root -Directory){
+  $packDir = Join-Path $d.FullName 'objects\pack'
+  foreach($p in Get-ChildItem -File -ea SilentlyContinue $packDir -Filter *.pack){
+    $h = Get-FileHash -Algorithm SHA256 $p
+    [pscustomobject]@{ repo=$d.Name; file=$p.FullName; sha256=$h.Hash }
+  }
+}
+$hashRows | Export-Csv -NoTypeInformation -Encoding UTF8 $hashCsv
+
+$totalBytes = ($rows | Measure-Object bytes -Sum).Sum
+$sumMB = [math]::Round($totalBytes/1MB,2)
+$note = Join-Path $OutDir "RECEIPT_$Stamp.md"
+@"
+# RepoZipper Cloud Receipt
+- User: $User
+- Backup root: $Root
+- Repos mirrored: $(@($rows).Count)
+- Total size (MB): $sumMB
+- Created: $Stamp
+
+Artifacts:
+- Manifest CSV: $(Split-Path $csv -Leaf)
+- Pack hashes CSV: $(Split-Path $hashCsv -Leaf)
