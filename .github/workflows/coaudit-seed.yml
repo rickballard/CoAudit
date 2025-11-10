@@ -1,0 +1,19 @@
+name: CoAudit Seed (manual)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run scout
+        uses: ./.github/actions/coaudit-scout
+        with:
+          outdir: coaudit
+      - name: Upload coaudit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coaudit
+          path: coaudit/
