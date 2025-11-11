@@ -1,0 +1,15 @@
+# policy/cocivia.coaudit.yaml
+version: "0.1.1"
+epoch: "2025-11-11 02:28:07Z"
+scope: internal
+glyph: "♡"
+hp57_inherit_acls: true
+
+coevo_checks:
+  enforce_entropy_floor: true
+  require_dissent: true
+  multi_domain_required: 3
+  reversible_first: true
+
+output_cues:
+  song_maps_coevo_signals: true
