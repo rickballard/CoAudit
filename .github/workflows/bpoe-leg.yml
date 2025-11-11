@@ -1,0 +1,17 @@
+name: bpoe-line-endings-guard
+on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - ".github/workflows/**"
+jobs:
+  leg:
+    name: leg
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail if CRLF found in guarded paths
+        run: |
+          if git ls-files -z docs .github/workflows | xargs -0 grep -I -n $'\r' -s; then
+            echo "CRLF found in guarded paths"; exit 1
+          fi
