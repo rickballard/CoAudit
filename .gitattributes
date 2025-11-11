@@ -3,3 +3,7 @@
 *.yml text eol=lf
 *.md  text eol=lf
 *.json text eol=lf
+
+*.ps1 text=auto
+docs/** text eol=lf
+.github/workflows/** text eol=lf
