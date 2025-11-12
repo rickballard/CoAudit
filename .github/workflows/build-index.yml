@@ -1,0 +1,8 @@
+name: build-index
+on:
+  pull_request:
+jobs:
+  build-index:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "ok"
