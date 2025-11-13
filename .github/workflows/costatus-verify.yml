@@ -1,0 +1,13 @@
+name: costatus-verify
+on:
+  pull_request:
+    paths:
+      - "docs/ops/costatus/**"
+      - "tools/ci/**"
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify CoStatus
+        uses: rickballard/CoCache/.github/actions/costatus-verify@main
